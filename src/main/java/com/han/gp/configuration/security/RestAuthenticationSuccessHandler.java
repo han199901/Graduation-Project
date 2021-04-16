@@ -31,7 +31,7 @@ public class RestAuthenticationSuccessHandler extends SimpleUrlAuthenticationSuc
         User springUser = (User) authentication.getPrincipal();
         com.han.gp.domain.User user = userService.getUserByUserName(springUser.getUsername());
         com.han.gp.domain.User newUser = new com.han.gp.domain.User();
-        newUser.setUsername(user.getUsername());
+        newUser.setUserName(user.getUserName());
         RestUtil.response(response, SystemCode.OK.getCode(), SystemCode.OK.getMessage(), newUser);
     }
 }

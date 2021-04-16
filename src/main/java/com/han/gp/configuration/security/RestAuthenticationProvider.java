@@ -43,7 +43,6 @@ public class RestAuthenticationProvider implements AuthenticationProvider {
         }
 
         boolean result = authenticationService.authUser(user, username, password);
-        System.out.println(result);
         if (!result) {
             throw new BadCredentialsException("用户名或密码错误");
         }
@@ -56,7 +55,7 @@ public class RestAuthenticationProvider implements AuthenticationProvider {
         ArrayList<GrantedAuthority> grantedAuthorities = new ArrayList<>();
         grantedAuthorities.add(new SimpleGrantedAuthority(RoleEnum.fromCode(user.getRole()).getRoleName()));
 
-        User authUser = new User(user.getUsername(), user.getPassword(), grantedAuthorities);
+        User authUser = new User(user.getUserName(), user.getPassword(), grantedAuthorities);
         return new UsernamePasswordAuthenticationToken(authUser, authUser.getPassword(), authUser.getAuthorities());
     }
 

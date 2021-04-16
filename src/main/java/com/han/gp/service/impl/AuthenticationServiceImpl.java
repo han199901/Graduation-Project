@@ -18,8 +18,6 @@ public class AuthenticationServiceImpl implements AuthenticationService {
 
     @Override
     public boolean authUser(User user, String username, String password) {
-        System.out.println(user.toString());
-        System.out.println(password);
         if(null == user)
             return false;
         else if(!password.equals(user.getPassword())) {
