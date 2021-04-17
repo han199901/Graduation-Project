@@ -12,7 +12,7 @@
             <property name="suppressAllComments" value="true"/>
         </commentGenerator>
         <!--数据库链接URL，用户名、密码 -->
-        <jdbcConnection driverClass="com.mysql.jdbc.Driver" connectionURL="jdbc:mysql://127.0.0.1:3306/exam?serverTimezone=GMT%2B8&amp;useUnicode=true&amp;characterEncoding=utf-8&amp;useSSL=false" userId="root" password="123456">
+        <jdbcConnection driverClass="com.mysql.cj.jdbc.Driver" connectionURL="jdbc:mysql://127.0.0.1:3306/exam?serverTimezone=GMT%2B8&amp;useUnicode=true&amp;characterEncoding=utf-8&amp;useSSL=false" userId="root" password="123456">
             <property name="nullCatalogMeansCurrent" value="true"/>
         </jdbcConnection>
         <javaTypeResolver>
@@ -31,7 +31,26 @@
         <javaClientGenerator type="XMLMAPPER" targetPackage="com.han.gp.mapper" targetProject="src/main/java">
             <property name="enableSubPackages" value="true"/>
         </javaClientGenerator>
-        <!-- 要生成的表 tableName是数据库中的表名或视图名 domainObjectName是实体类名-->
-        <table tableName="user" enableCountByExample="false" enableUpdateByExample="false" enableDeleteByExample="false" enableSelectByExample="false" selectByExampleQueryId="false"></table>
+        <!-- 要生成的表 tableName是数据库中的表名或视图名 domainObjectName是实体类名
+        | class                               |
+| exam_paper                          |
+| exam_paper_answer                   |
+| exam_paper_question_customer_answer |
+| question                            |
+| relation                            |
+| task_exam                           |
+| task_exam_customer_answer           |
+| text_content                        |
+| user                                |
+        -->
+        <table tableName="class" enableCountByExample="false" enableUpdateByExample="false" enableDeleteByExample="false" enableSelectByExample="false" selectByExampleQueryId="false"></table>
+        <table tableName="exam_paper" enableCountByExample="false" enableUpdateByExample="false" enableDeleteByExample="false" enableSelectByExample="false" selectByExampleQueryId="false"></table>
+        <table tableName="exam_paper_answer" enableCountByExample="false" enableUpdateByExample="false" enableDeleteByExample="false" enableSelectByExample="false" selectByExampleQueryId="false"></table>
+        <table tableName="exam_paper_question_customer_answer" enableCountByExample="false" enableUpdateByExample="false" enableDeleteByExample="false" enableSelectByExample="false" selectByExampleQueryId="false"></table>
+        <table tableName="question" enableCountByExample="false" enableUpdateByExample="false" enableDeleteByExample="false" enableSelectByExample="false" selectByExampleQueryId="false"></table>
+        <table tableName="relation" enableCountByExample="false" enableUpdateByExample="false" enableDeleteByExample="false" enableSelectByExample="false" selectByExampleQueryId="false"></table>
+        <table tableName="task_exam" enableCountByExample="false" enableUpdateByExample="false" enableDeleteByExample="false" enableSelectByExample="false" selectByExampleQueryId="false"></table>
+        <table tableName="task_exam_customer_answer" enableCountByExample="false" enableUpdateByExample="false" enableDeleteByExample="false" enableSelectByExample="false" selectByExampleQueryId="false"></table>
+        <table tableName="text_content" enableCountByExample="false" enableUpdateByExample="false" enableDeleteByExample="false" enableSelectByExample="false" selectByExampleQueryId="false"></table>
     </context>
 </generatorConfiguration>
