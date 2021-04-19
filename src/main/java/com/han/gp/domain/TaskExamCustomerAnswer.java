@@ -1,8 +1,9 @@
 package com.han.gp.domain;
 
+import java.io.Serializable;
 import java.util.Date;
 
-public class TaskExamCustomerAnswer {
+public class TaskExamCustomerAnswer implements Serializable {
     private Integer id;
 
     private Integer taskExamId;

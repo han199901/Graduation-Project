@@ -1,8 +1,9 @@
 package com.han.gp.domain;
 
+import java.io.Serializable;
 import java.util.Date;
 
-public class ExamPaper {
+public class ExamPaper implements Serializable {
     private Integer id;
 
     private String name;

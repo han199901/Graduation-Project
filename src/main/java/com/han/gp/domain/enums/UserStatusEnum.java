@@ -1,10 +1,11 @@
 package com.han.gp.domain.enums;
 
 
+import java.io.Serializable;
 import java.util.HashMap;
 import java.util.Map;
 
-public enum UserStatusEnum {
+public enum UserStatusEnum implements Serializable {
 
     Enable(true, "启用"),
     Disable(false, "禁用");

@@ -23,3 +23,11 @@ spring:
 # mybatis
 mybatis:
   mapper-locations: classpath:/mapping/*.xml
+  configuration:
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+
+#mybatis page helper
+pagehelper:
+  autoDialect: true
+  closeConn: true
+  reasonable: true

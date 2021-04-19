@@ -29,6 +29,20 @@
     from exam_paper_question_customer_answer
     where id = #{id,jdbcType=INTEGER}
   </select>
+
+  <select id="selectAllCount"  resultType="java.lang.Integer">
+    SELECT count(*) from exam_paper_question_customer_answer
+  </select>
+
+  <select id="selectCountByDate"  resultType="com.han.gp.domain.KeyValue">
+    SELECT create_time as name,COUNT(create_time) as value from
+      (
+      SELECT DATE_FORMAT(create_time,'%Y-%m-%d') as create_time from exam_paper_question_customer_answer
+      WHERE  create_time  between  #{startTime}  and  #{endTime}
+      ) a
+    GROUP BY create_time
+  </select>
+
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
     delete from exam_paper_question_customer_answer
     where id = #{id,jdbcType=INTEGER}

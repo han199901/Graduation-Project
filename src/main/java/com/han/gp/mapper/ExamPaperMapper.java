@@ -16,4 +16,6 @@ public interface ExamPaperMapper {
     int updateByPrimaryKeySelective(ExamPaper record);
 
     int updateByPrimaryKey(ExamPaper record);
+
+    Integer selectAllCount();
 }

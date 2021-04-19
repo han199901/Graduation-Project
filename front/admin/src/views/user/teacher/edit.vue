@@ -20,7 +20,7 @@
         </el-select>
       </el-form-item>
       <el-form-item label="出生日期：">
-        <el-date-picker v-model="form.birthDay" type="date" value-format="yyyy-MM-dd hh:mm:ss" placeholder="选择日期" />
+        <el-date-picker v-model="form.birthDay" type="date" value-format="yyyy-MM-dd" placeholder="选择日期" />
       </el-form-item>
       <el-form-item label="手机：">
         <el-input v-model="form.phone"></el-input>
@@ -98,7 +98,7 @@ export default {
             if (data.code === 1) {
               _this.$message.success(data.message)
               _this.delCurrentView(_this).then(() => {
-                _this.$router.push('/user/student/list')
+                _this.$router.push('/user/teacher/list')
               })
             } else {
               _this.$message.error(data.message)

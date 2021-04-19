@@ -1,7 +1,11 @@
 package com.han.gp.mapper;
 
+import com.github.pagehelper.PageInfo;
 import com.han.gp.domain.User;
+import com.han.gp.vo.admin.user.UserPageRequest;
 import org.apache.ibatis.annotations.Mapper;
+
+import java.util.List;
 
 @Mapper
 public interface UserMapper {
@@ -18,4 +22,7 @@ public interface UserMapper {
     int updateByPrimaryKeySelective(User record);
 
     int updateByPrimaryKey(User record);
+
+
+    List<User> userPage(UserPageRequest model);
 }

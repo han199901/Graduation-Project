@@ -16,4 +16,6 @@ public interface ExamPaperAnswerMapper {
     int updateByPrimaryKeySelective(ExamPaperAnswer record);
 
     int updateByPrimaryKey(ExamPaperAnswer record);
+
+    Integer selectAllCount();
 }

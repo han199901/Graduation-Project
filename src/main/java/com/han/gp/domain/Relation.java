@@ -1,6 +1,8 @@
 package com.han.gp.domain;
 
-public class Relation {
+import java.io.Serializable;
+
+public class Relation implements Serializable {
     private Integer id;
 
     private Integer tid;

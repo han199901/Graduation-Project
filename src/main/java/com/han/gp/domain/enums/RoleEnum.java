@@ -1,10 +1,11 @@
 package com.han.gp.domain.enums;
 
 
+import java.io.Serializable;
 import java.util.HashMap;
 import java.util.Map;
 
-public enum RoleEnum {
+public enum RoleEnum implements Serializable {
 
     STUDENT(1, "STUDENT"),
     TEACHER(2,"TEACHER"),

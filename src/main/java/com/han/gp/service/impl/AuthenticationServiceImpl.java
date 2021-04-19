@@ -25,4 +25,9 @@ public class AuthenticationServiceImpl implements AuthenticationService {
         }
         return true;
     }
+
+    @Override
+    public String pwdEncode(String password) {
+        return password;
+    }
 }
