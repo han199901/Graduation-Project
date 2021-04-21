@@ -21,7 +21,7 @@ import java.util.Arrays;
 
 @RestController
 @RequestMapping("/api/admin/upload")
-public class Upload extends BaseApiController {
+public class UploadOps extends BaseApiController {
 
     private final FileUpload fileUpload;
     private final SystemConfig systemConfig;
@@ -30,7 +30,7 @@ public class Upload extends BaseApiController {
     private final UserService userService;
 
     @Autowired
-    public Upload(FileUpload fileUpload, SystemConfig systemConfig, UserService userService) {
+    public UploadOps(FileUpload fileUpload, SystemConfig systemConfig, UserService userService) {
         this.fileUpload = fileUpload;
         this.systemConfig = systemConfig;
         this.userService = userService;

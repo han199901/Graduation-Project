@@ -1,7 +1,11 @@
 package com.han.gp.domain;
 
+import com.han.gp.domain.enums.QuestionTypeEnum;
+import com.han.gp.utility.ExamUtil;
+
 import java.io.Serializable;
 import java.util.Date;
+import java.util.List;
 
 public class Question implements Serializable {
     private Integer id;
@@ -122,5 +126,15 @@ public class Question implements Serializable {
 
     public void setCorrect(String correct) {
         this.correct = correct == null ? null : correct.trim();
+    }
+
+    public void setCorrectFromVO(String correct, List<String> correctArray) {
+        int qType = this.getQuestionType();
+        if (qType == QuestionTypeEnum.MultipleChoice.getCode()) {
+            String correctJoin = ExamUtil.contentToString(correctArray);
+            this.setCorrect(correctJoin);
+        } else {
+            this.setCorrect(correct);
+        }
     }
 }

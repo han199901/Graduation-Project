@@ -18,7 +18,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping(value = "/api/admin/dashboard")
-public class Dashboard extends BaseApiController {
+public class DashboardOps extends BaseApiController {
 
     private final ExamPaperService examPaperService;
     private final QuestionService questionService;
@@ -26,7 +26,7 @@ public class Dashboard extends BaseApiController {
     private final ExamPaperQuestionCustomerAnswerService examPaperQuestionCustomerAnswerService;
 
     @Autowired
-    public Dashboard(ExamPaperService examPaperService, QuestionService questionService, ExamPaperAnswerService examPaperAnswerService, ExamPaperQuestionCustomerAnswerService examPaperQuestionCustomerAnswerService) {
+    public DashboardOps(ExamPaperService examPaperService, QuestionService questionService, ExamPaperAnswerService examPaperAnswerService, ExamPaperQuestionCustomerAnswerService examPaperQuestionCustomerAnswerService) {
         this.examPaperService = examPaperService;
         this.questionService = questionService;
         this.examPaperAnswerService = examPaperAnswerService;

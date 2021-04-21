@@ -10,6 +10,15 @@ public class TextContent implements Serializable {
 
     private String content;
 
+    public TextContent(){
+
+    }
+
+    public TextContent(String content, Date createTime) {
+        this.content = content;
+        this.createTime = createTime;
+    }
+
     public Integer getId() {
         return id;
     }
