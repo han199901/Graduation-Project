@@ -7,7 +7,6 @@ import com.han.gp.mapper.UserMapper;
 import com.han.gp.service.UserService;
 import com.han.gp.vo.admin.user.UserPageRequest;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -55,7 +54,6 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    @CacheEvict(value = CACHE_NAME, key = "#user.userName")
     @Transactional
     public void changePicture(User currentUser, String filePath) {
         User changePictureUser = new User();

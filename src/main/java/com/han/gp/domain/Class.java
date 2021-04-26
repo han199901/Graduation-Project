@@ -1,11 +1,11 @@
 package com.han.gp.domain;
 
-import java.io.Serializable;
-
-public class Class implements Serializable {
+public class Class {
     private Integer id;
 
     private String name;
+
+    private Boolean deleted;
 
     public Integer getId() {
         return id;
@@ -21,5 +21,13 @@ public class Class implements Serializable {
 
     public void setName(String name) {
         this.name = name == null ? null : name.trim();
+    }
+
+    public Boolean getDeleted() {
+        return deleted;
+    }
+
+    public void setDeleted(Boolean deleted) {
+        this.deleted = deleted;
     }
 }

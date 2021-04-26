@@ -1,7 +1,11 @@
 package com.han.gp.mapper;
 
+
 import com.han.gp.domain.Class;
+import com.han.gp.vo.admin.education.ClassPageRequest;
 import org.apache.ibatis.annotations.Mapper;
+
+import java.util.List;
 
 @Mapper
 public interface ClassMapper {
@@ -16,4 +20,8 @@ public interface ClassMapper {
     int updateByPrimaryKeySelective(Class record);
 
     int updateByPrimaryKey(Class record);
+
+    List<Class> allClasses();
+
+    List<Class> page(ClassPageRequest model);
 }

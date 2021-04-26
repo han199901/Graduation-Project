@@ -34,11 +34,30 @@
     SELECT count(*) from exam_paper_answer
   </select>
 
+  <select id="getByPidUid" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from exam_paper_answer
+    where exam_paper_id = #{pid} and create_user=#{uid}
+    limit 1
+  </select>
+
+  <select id="adminPage" resultMap="BaseResultMap" parameterType="com.han.gp.vo.admin.paper.ExamPaperAnswerPageRequest">
+    SELECT
+    <include refid="Base_Column_List"/>
+    FROM exam_paper_answer
+    <where>
+      <if test="subjectId != null">
+        and subject_id = #{subjectId}
+      </if>
+    </where>
+  </select>
+
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
     delete from exam_paper_answer
     where id = #{id,jdbcType=INTEGER}
   </delete>
-  <insert id="insert" parameterType="com.han.gp.domain.ExamPaperAnswer">
+  <insert id="insert" parameterType="com.han.gp.domain.ExamPaperAnswer" useGeneratedKeys="true" keyProperty="id">
     insert into exam_paper_answer (id, exam_paper_id, paper_name, 
       paper_type, subject_id, system_score, 
       user_score, paper_score, question_correct, 
@@ -52,7 +71,7 @@
       #{createUser,jdbcType=INTEGER}, #{createTime,jdbcType=TIMESTAMP}, #{taskExamId,jdbcType=INTEGER}
       )
   </insert>
-  <insert id="insertSelective" parameterType="com.han.gp.domain.ExamPaperAnswer">
+  <insert id="insertSelective" parameterType="com.han.gp.domain.ExamPaperAnswer" useGeneratedKeys="true" keyProperty="id">
     insert into exam_paper_answer
     <trim prefix="(" suffix=")" suffixOverrides=",">
       <if test="id != null">
@@ -149,7 +168,7 @@
       </if>
     </trim>
   </insert>
-  <update id="updateByPrimaryKeySelective" parameterType="com.han.gp.domain.ExamPaperAnswer">
+  <update id="updateByPrimaryKeySelective" parameterType="com.han.gp.domain.ExamPaperAnswer" useGeneratedKeys="true" keyProperty="id">
     update exam_paper_answer
     <set>
       <if test="examPaperId != null">
@@ -197,7 +216,7 @@
     </set>
     where id = #{id,jdbcType=INTEGER}
   </update>
-  <update id="updateByPrimaryKey" parameterType="com.han.gp.domain.ExamPaperAnswer">
+  <update id="updateByPrimaryKey" parameterType="com.han.gp.domain.ExamPaperAnswer" useGeneratedKeys="true" keyProperty="id">
     update exam_paper_answer
     set exam_paper_id = #{examPaperId,jdbcType=INTEGER},
       paper_name = #{paperName,jdbcType=VARCHAR},

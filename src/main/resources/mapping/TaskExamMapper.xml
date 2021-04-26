@@ -21,11 +21,32 @@
     from task_exam
     where id = #{id,jdbcType=INTEGER}
   </select>
+
+  <select id="getByGradeLevel" resultMap="BaseResultMap" parameterType="java.lang.Integer">
+    select
+    <include refid="Base_Column_List" />
+    from task_exam
+    where deleted=0
+    and grade_level = #{gradeLevel,jdbcType=INTEGER}
+  </select>
+
+  <select id="page" resultMap="BaseResultMap" parameterType="com.han.gp.vo.admin.task.TaskPageRequest">
+    select
+    <include refid="Base_Column_List" />
+    from task_exam
+    <where>
+      and deleted=0
+      <if test="gradeLevel != null">
+        and grade_level = #{gradeLevel}
+      </if>
+    </where>
+  </select>
+
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
     delete from task_exam
     where id = #{id,jdbcType=INTEGER}
   </delete>
-  <insert id="insert" parameterType="com.han.gp.domain.TaskExam">
+  <insert id="insert" parameterType="com.han.gp.domain.TaskExam" useGeneratedKeys="true" keyProperty="id">
     insert into task_exam (id, title, grade_level, 
       frame_text_content_id, create_user, create_time, 
       deleted, create_user_name)
@@ -33,7 +54,7 @@
       #{frameTextContentId,jdbcType=INTEGER}, #{createUser,jdbcType=INTEGER}, #{createTime,jdbcType=TIMESTAMP}, 
       #{deleted,jdbcType=BIT}, #{createUserName,jdbcType=VARCHAR})
   </insert>
-  <insert id="insertSelective" parameterType="com.han.gp.domain.TaskExam">
+  <insert id="insertSelective" parameterType="com.han.gp.domain.TaskExam" useGeneratedKeys="true" keyProperty="id">
     insert into task_exam
     <trim prefix="(" suffix=")" suffixOverrides=",">
       <if test="id != null">
@@ -88,7 +109,7 @@
       </if>
     </trim>
   </insert>
-  <update id="updateByPrimaryKeySelective" parameterType="com.han.gp.domain.TaskExam">
+  <update id="updateByPrimaryKeySelective" parameterType="com.han.gp.domain.TaskExam" useGeneratedKeys="true" keyProperty="id">
     update task_exam
     <set>
       <if test="title != null">
@@ -115,7 +136,7 @@
     </set>
     where id = #{id,jdbcType=INTEGER}
   </update>
-  <update id="updateByPrimaryKey" parameterType="com.han.gp.domain.TaskExam">
+  <update id="updateByPrimaryKey" parameterType="com.han.gp.domain.TaskExam" useGeneratedKeys="true" keyProperty="id">
     update task_exam
     set title = #{title,jdbcType=VARCHAR},
       grade_level = #{gradeLevel,jdbcType=INTEGER},

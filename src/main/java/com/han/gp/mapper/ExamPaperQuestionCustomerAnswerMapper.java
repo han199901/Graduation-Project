@@ -2,6 +2,7 @@ package com.han.gp.mapper;
 
 import com.han.gp.domain.ExamPaperQuestionCustomerAnswer;
 import com.han.gp.domain.KeyValue;
+import com.han.gp.vo.student.question.answer.QuestionPageStudentRequest;
 import org.apache.ibatis.annotations.Mapper;
 
 import java.util.Date;
@@ -24,4 +25,6 @@ public interface ExamPaperQuestionCustomerAnswerMapper {
     Integer selectAllCount();
 
     List<KeyValue> selectCountByDate(Date startTime, Date endTime);
+
+    List<ExamPaperQuestionCustomerAnswer> studentPage(QuestionPageStudentRequest model);
 }

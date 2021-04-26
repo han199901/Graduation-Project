@@ -21,4 +21,6 @@ public interface TaskExamMapper {
     int updateByPrimaryKey(TaskExam record);
 
     List<TaskExam> page(TaskPageRequest model);
+
+    List<TaskExam> getByGradeLevel(Integer gradeLevel);
 }

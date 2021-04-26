@@ -1,4 +1,4 @@
-/*
+
 package com.han.gp.controller.admin;
 
 
@@ -7,6 +7,10 @@ import com.han.gp.base.BaseApiController;
 import com.han.gp.base.RestResponse;
 import com.han.gp.domain.Class;
 import com.han.gp.service.ClassService;
+import com.han.gp.utility.PageInfoHelper;
+import com.han.gp.vo.admin.education.ClassPageRequest;
+import com.han.gp.vo.admin.education.ClassResponse;
+import com.han.gp.vo.student.education.ClassEditRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -26,42 +30,40 @@ public class EducationOps extends BaseApiController {
 
     @RequestMapping(value = "/subject/list", method = RequestMethod.POST)
     public RestResponse<List<Class>> list() {
-        List<Class> subjects = classService.allSubject();
+        List<Class> subjects = classService.allClasses();
         return RestResponse.ok(subjects);
     }
 
     @RequestMapping(value = "/subject/page", method = RequestMethod.POST)
-    public RestResponse<PageInfo<SubjectResponseVM>> pageList(@RequestBody SubjectPageRequestVM model) {
-        PageInfo<Class> pageInfo = subjectService.page(model);
-        PageInfo<SubjectResponseVM> page = PageInfoHelper.copyMap(pageInfo, e -> modelMapper.map(e, SubjectResponseVM.class));
+    public RestResponse<PageInfo<ClassResponse>> pageList(@RequestBody ClassPageRequest model) {
+        PageInfo<Class> pageInfo = classService.page(model);
+        PageInfo<ClassResponse> page = PageInfoHelper.copyMap(pageInfo, e -> modelMapper.map(e, ClassResponse.class));
         return RestResponse.ok(page);
     }
 
     @RequestMapping(value = "/subject/edit", method = RequestMethod.POST)
-    public RestResponse edit(@RequestBody @Valid SubjectEditRequestVM model) {
-        Subject subject = modelMapper.map(model, Subject.class);
+    public RestResponse edit(@RequestBody @Valid ClassEditRequest model) {
+        Class aClass = modelMapper.map(model, Class.class);
         if (model.getId() == null) {
-            subject.setDeleted(false);
-            subjectService.insertByFilter(subject);
+            classService.insertByFilter(aClass);
         } else {
-            subjectService.updateByIdFilter(subject);
+            classService.updateByIdFilter(aClass);
         }
         return RestResponse.ok();
     }
 
     @RequestMapping(value = "/subject/select/{id}", method = RequestMethod.POST)
-    public RestResponse<SubjectEditRequestVM> select(@PathVariable Integer id) {
-        Class subject = subjectService.selectById(id);
-        SubjectEditRequestVM vm = modelMapper.map(subject, SubjectEditRequestVM.class);
+    public RestResponse<ClassEditRequest> select(@PathVariable Integer id) {
+        Class subject = classService.selectById(id);
+        ClassEditRequest vm = modelMapper.map(subject, ClassEditRequest.class);
         return RestResponse.ok(vm);
     }
 
     @RequestMapping(value = "/subject/delete/{id}", method = RequestMethod.POST)
     public RestResponse delete(@PathVariable Integer id) {
-        Class subject = subjectService.selectById(id);
-        subject.setDeleted(true);
-        subjectService.updateByIdFilter(subject);
+        Class subject = classService.selectById(id);
+        classService.updateByIdFilter(subject);
         return RestResponse.ok();
     }
 }
-*/
+

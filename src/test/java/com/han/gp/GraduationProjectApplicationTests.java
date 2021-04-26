@@ -8,13 +8,9 @@ import org.springframework.boot.test.context.SpringBootTest;
 @SpringBootTest
 class GraduationProjectApplicationTests {
 
-	@Autowired
-	UserService userService;
 
 	@Test
 	void contextLoads() {
-		System.out.println(userService.getUserByUserName("han"));
-
 	}
 
 }

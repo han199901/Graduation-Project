@@ -4,9 +4,10 @@
   <resultMap id="BaseResultMap" type="com.han.gp.domain.Class">
     <id column="id" jdbcType="INTEGER" property="id" />
     <result column="name" jdbcType="VARCHAR" property="name" />
+    <result column="deleted" jdbcType="BIT" property="deleted" />
   </resultMap>
   <sql id="Base_Column_List">
-    id, name
+    id, name, deleted
   </sql>
   <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
     select 
@@ -14,15 +15,33 @@
     from class
     where id = #{id,jdbcType=INTEGER}
   </select>
+  <select id="allClasses" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List"/>
+    from class
+  </select>
+  <select id="page" resultMap="BaseResultMap" parameterType="com.han.gp.vo.admin.education.ClassPageRequest">
+    SELECT
+    <include refid="Base_Column_List"/>
+    FROM class
+    <where>
+      and deleted=0
+      <if test="id != null ">
+        and id= #{id}
+      </if>
+    </where>
+  </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
     delete from class
     where id = #{id,jdbcType=INTEGER}
   </delete>
-  <insert id="insert" parameterType="com.han.gp.domain.Class">
-    insert into class (id, name)
-    values (#{id,jdbcType=INTEGER}, #{name,jdbcType=VARCHAR})
+  <insert id="insert" parameterType="com.han.gp.domain.Class" useGeneratedKeys="true" keyProperty="id">
+    insert into class (id, name, deleted
+      )
+    values (#{id,jdbcType=INTEGER}, #{name,jdbcType=VARCHAR}, #{deleted,jdbcType=BIT}
+      )
   </insert>
-  <insert id="insertSelective" parameterType="com.han.gp.domain.Class">
+  <insert id="insertSelective" parameterType="com.han.gp.domain.Class" useGeneratedKeys="true" keyProperty="id">
     insert into class
     <trim prefix="(" suffix=")" suffixOverrides=",">
       <if test="id != null">
@@ -30,6 +49,9 @@
       </if>
       <if test="name != null">
         name,
+      </if>
+      <if test="deleted != null">
+        deleted,
       </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides=",">
@@ -39,20 +61,27 @@
       <if test="name != null">
         #{name,jdbcType=VARCHAR},
       </if>
+      <if test="deleted != null">
+        #{deleted,jdbcType=BIT},
+      </if>
     </trim>
   </insert>
-  <update id="updateByPrimaryKeySelective" parameterType="com.han.gp.domain.Class">
+  <update id="updateByPrimaryKeySelective" parameterType="com.han.gp.domain.Class" useGeneratedKeys="true" keyProperty="id">
     update class
     <set>
       <if test="name != null">
         name = #{name,jdbcType=VARCHAR},
       </if>
+      <if test="deleted != null">
+        deleted = #{deleted,jdbcType=BIT},
+      </if>
     </set>
     where id = #{id,jdbcType=INTEGER}
   </update>
-  <update id="updateByPrimaryKey" parameterType="com.han.gp.domain.Class">
+  <update id="updateByPrimaryKey" parameterType="com.han.gp.domain.Class" useGeneratedKeys="true" keyProperty="id">
     update class
-    set name = #{name,jdbcType=VARCHAR}
+    set name = #{name,jdbcType=VARCHAR},
+      deleted = #{deleted,jdbcType=BIT}
     where id = #{id,jdbcType=INTEGER}
   </update>
 </mapper>

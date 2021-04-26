@@ -1,6 +1,5 @@
 package com.han.gp.mapper;
 
-import com.github.pagehelper.PageInfo;
 import com.han.gp.domain.User;
 import com.han.gp.vo.admin.user.UserPageRequest;
 import org.apache.ibatis.annotations.Mapper;

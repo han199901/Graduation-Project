@@ -6,6 +6,8 @@ import com.han.gp.domain.User;
 import com.han.gp.vo.admin.task.TaskPageRequest;
 import com.han.gp.vo.admin.task.TaskRequest;
 
+import java.util.List;
+
 public interface TaskExamService {
     void edit(TaskRequest model, User currentUser);
 
@@ -16,4 +18,7 @@ public interface TaskExamService {
     TaskExam selectById(Integer id);
 
     int updateByIdFilter(TaskExam taskExam);
+
+    List<TaskExam> getByGradeLevel(Integer gradeLevel);
+
 }

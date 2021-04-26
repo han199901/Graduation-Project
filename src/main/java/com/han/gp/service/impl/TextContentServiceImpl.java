@@ -25,7 +25,6 @@ public class TextContentServiceImpl implements TextContentService {
     }
 
     @Override
-    @Cacheable(value = CACHE_NAME, key = "#id", unless = "#result == null")
     public TextContent selectById(Integer id) {
         return textContentMapper.selectByPrimaryKey(id);
     }
@@ -36,7 +35,6 @@ public class TextContentServiceImpl implements TextContentService {
     }
 
     @Override
-    @CacheEvict(value = CACHE_NAME, key = "#record.id")
     public int updateByIdFilter(TextContent record) {
         return textContentMapper.updateByPrimaryKeySelective(record);
     }

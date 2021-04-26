@@ -2,6 +2,9 @@ package com.han.gp.mapper;
 
 import com.han.gp.domain.TaskExamCustomerAnswer;
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
+
+import java.util.List;
 
 @Mapper
 public interface TaskExamCustomerAnswerMapper {
@@ -16,4 +19,9 @@ public interface TaskExamCustomerAnswerMapper {
     int updateByPrimaryKeySelective(TaskExamCustomerAnswer record);
 
     int updateByPrimaryKey(TaskExamCustomerAnswer record);
+
+    TaskExamCustomerAnswer getByTUid(@Param("tid") Integer tid, @Param("uid") Integer uid);
+
+    List<TaskExamCustomerAnswer> selectByTUid(@Param("taskIds") List<Integer> taskIds, @Param("uid") Integer uid);
+
 }

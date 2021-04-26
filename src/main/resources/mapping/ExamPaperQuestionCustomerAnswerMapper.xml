@@ -47,7 +47,7 @@
     delete from exam_paper_question_customer_answer
     where id = #{id,jdbcType=INTEGER}
   </delete>
-  <insert id="insert" parameterType="com.han.gp.domain.ExamPaperQuestionCustomerAnswer">
+  <insert id="insert" parameterType="com.han.gp.domain.ExamPaperQuestionCustomerAnswer" useGeneratedKeys="true" keyProperty="id">
     insert into exam_paper_question_customer_answer (id, question_id, exam_paper_id, 
       exam_paper_answer_id, question_type, subject_id, 
       customer_score, question_score, question_text_content_id, 
@@ -61,7 +61,7 @@
       #{createUser,jdbcType=INTEGER}, #{createTime,jdbcType=TIMESTAMP}, #{itemOrder,jdbcType=INTEGER}
       )
   </insert>
-  <insert id="insertSelective" parameterType="com.han.gp.domain.ExamPaperQuestionCustomerAnswer">
+  <insert id="insertSelective" parameterType="com.han.gp.domain.ExamPaperQuestionCustomerAnswer" useGeneratedKeys="true" keyProperty="id">
     insert into exam_paper_question_customer_answer
     <trim prefix="(" suffix=")" suffixOverrides=",">
       <if test="id != null">
@@ -158,7 +158,7 @@
       </if>
     </trim>
   </insert>
-  <update id="updateByPrimaryKeySelective" parameterType="com.han.gp.domain.ExamPaperQuestionCustomerAnswer">
+  <update id="updateByPrimaryKeySelective" parameterType="com.han.gp.domain.ExamPaperQuestionCustomerAnswer" useGeneratedKeys="true" keyProperty="id">
     update exam_paper_question_customer_answer
     <set>
       <if test="questionId != null">
@@ -206,7 +206,7 @@
     </set>
     where id = #{id,jdbcType=INTEGER}
   </update>
-  <update id="updateByPrimaryKey" parameterType="com.han.gp.domain.ExamPaperQuestionCustomerAnswer">
+  <update id="updateByPrimaryKey" parameterType="com.han.gp.domain.ExamPaperQuestionCustomerAnswer" useGeneratedKeys="true" keyProperty="id">
     update exam_paper_question_customer_answer
     set question_id = #{questionId,jdbcType=INTEGER},
       exam_paper_id = #{examPaperId,jdbcType=INTEGER},

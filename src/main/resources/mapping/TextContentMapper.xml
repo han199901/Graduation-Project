@@ -26,13 +26,13 @@
     delete from text_content
     where id = #{id,jdbcType=INTEGER}
   </delete>
-  <insert id="insert" parameterType="com.han.gp.domain.TextContent">
+  <insert id="insert" parameterType="com.han.gp.domain.TextContent" useGeneratedKeys="true" keyProperty="id">
     insert into text_content (id, create_time, content
       )
     values (#{id,jdbcType=INTEGER}, #{createTime,jdbcType=TIMESTAMP}, #{content,jdbcType=LONGVARCHAR}
       )
   </insert>
-  <insert id="insertSelective" parameterType="com.han.gp.domain.TextContent">
+  <insert id="insertSelective" parameterType="com.han.gp.domain.TextContent" useGeneratedKeys="true" keyProperty="id">
     insert into text_content
     <trim prefix="(" suffix=")" suffixOverrides=",">
       <if test="id != null">
@@ -57,7 +57,7 @@
       </if>
     </trim>
   </insert>
-  <update id="updateByPrimaryKeySelective" parameterType="com.han.gp.domain.TextContent">
+  <update id="updateByPrimaryKeySelective" parameterType="com.han.gp.domain.TextContent" useGeneratedKeys="true" keyProperty="id">
     update text_content
     <set>
       <if test="createTime != null">
@@ -69,13 +69,13 @@
     </set>
     where id = #{id,jdbcType=INTEGER}
   </update>
-  <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.han.gp.domain.TextContent">
+  <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.han.gp.domain.TextContent" useGeneratedKeys="true" keyProperty="id">
     update text_content
     set create_time = #{createTime,jdbcType=TIMESTAMP},
       content = #{content,jdbcType=LONGVARCHAR}
     where id = #{id,jdbcType=INTEGER}
   </update>
-  <update id="updateByPrimaryKey" parameterType="com.han.gp.domain.TextContent">
+  <update id="updateByPrimaryKey" parameterType="com.han.gp.domain.TextContent" useGeneratedKeys="true" keyProperty="id">
     update text_content
     set create_time = #{createTime,jdbcType=TIMESTAMP}
     where id = #{id,jdbcType=INTEGER}

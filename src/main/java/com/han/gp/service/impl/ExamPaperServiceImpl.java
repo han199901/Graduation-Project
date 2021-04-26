@@ -19,6 +19,9 @@ import com.han.gp.vo.admin.exam.ExamPaperEditRequest;
 import com.han.gp.vo.admin.exam.ExamPaperPageRequest;
 import com.han.gp.vo.admin.exam.ExamPaperTitleItem;
 import com.han.gp.vo.admin.question.QuestionEditRequest;
+import com.han.gp.vo.student.dashboard.PaperFilter;
+import com.han.gp.vo.student.dashboard.PaperInfo;
+import com.han.gp.vo.student.exam.ExamPaperPage;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -104,7 +107,6 @@ public class ExamPaperServiceImpl implements ExamPaperService {
     public ExamPaperEditRequest examPaperToVO(Integer id) {
         ExamPaper examPaper = examPaperMapper.selectByPrimaryKey(id);
         ExamPaperEditRequest vm = modelMapper.map(examPaper, ExamPaperEditRequest.class);
-        vm.setLevel(examPaper.getGradeLevel());
         TextContent frameTextContent = textContentService.selectById(examPaper.getFrameTextContentId());
         List<ExamPaperTitleItemObject> examPaperTitleItemObjects = JsonUtil.toJsonListObject(frameTextContent.getContent(), ExamPaperTitleItemObject.class);
         List<Integer> questionIds = examPaperTitleItemObjects.stream()
@@ -172,5 +174,16 @@ public class ExamPaperServiceImpl implements ExamPaperService {
     @Override
     public ExamPaper selectById(Integer id) {
         return examPaperMapper.selectByPrimaryKey(id);
+    }
+
+    @Override
+    public List<PaperInfo> indexPaper(PaperFilter timeLimitPaperFilter) {
+        return examPaperMapper.indexPaper(timeLimitPaperFilter);
+    }
+
+    @Override
+    public PageInfo<ExamPaper> studentPage(ExamPaperPage model) {
+        return PageHelper.startPage(model.getPageIndex(), model.getPageSize(), "id desc").doSelectPageInfo(() ->
+                examPaperMapper.studentPage(model));
     }
 }

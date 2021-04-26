@@ -16,4 +16,6 @@ public interface RelationMapper {
     int updateByPrimaryKeySelective(Relation record);
 
     int updateByPrimaryKey(Relation record);
+
+    Relation selectByUid(Integer id);
 }

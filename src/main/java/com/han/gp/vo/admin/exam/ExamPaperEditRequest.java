@@ -12,8 +12,6 @@ import java.util.List;
 public class ExamPaperEditRequest {
     private Integer id;
     @NotNull
-    private Integer level;
-    @NotNull
     private Integer subjectId;
     @NotNull
     private Integer paperType;
@@ -36,14 +34,6 @@ public class ExamPaperEditRequest {
 
     public void setId(Integer id) {
         this.id = id;
-    }
-
-    public Integer getLevel() {
-        return level;
-    }
-
-    public void setLevel(Integer level) {
-        this.level = level;
     }
 
     public Integer getSubjectId() {

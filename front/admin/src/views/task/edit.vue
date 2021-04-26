@@ -2,11 +2,6 @@
   <div class="app-container">
 
     <el-form :model="form" ref="form" label-width="100px" v-loading="formLoading" :rules="rules">
-      <el-form-item label="年级：" prop="gradeLevel"  required>
-        <el-select v-model="form.gradeLevel" placeholder="年级" @change="levelChange" >
-          <el-option v-for="item in levelEnum" :key="item.key" :value="item.key" :label="item.value"></el-option>
-        </el-select>
-      </el-form-item>
       <el-form-item label="标题："  prop="title" required>
         <el-input v-model="form.title"></el-input>
       </el-form-item>
@@ -114,17 +109,19 @@ export default {
   },
   methods: {
     addPaper () {
-      this.paperPage.queryParam.level = this.form.gradeLevel
+      this.paperPage.queryParam.level = this.paperPage.queryParam.subjectId
       this.paperPage.showDialog = true
       this.search()
     },
     confirmPaperSelect () {
+      this.form.gradeLevel = this.paperPage.queryParam.subjectId
       this.paperPage.multipleSelection.forEach(ep => this.form.paperItems.push(ep))
       this.paperPage.showDialog = false
     },
     search () {
       this.paperPage.showDialog = true
       this.listLoading = true
+      this.paperPage.queryParam.level = this.paperPage.queryParam.subjectId
       examPaperApi.taskExamPage(this.paperPage.queryParam).then(data => {
         const re = data.response
         this.paperPage.tableData = re.list

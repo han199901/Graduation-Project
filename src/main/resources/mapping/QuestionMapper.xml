@@ -33,10 +33,31 @@
     where id = #{id,jdbcType=INTEGER}
   </select>
 
+  <select id="page" resultMap="BaseResultMap" parameterType="com.han.gp.vo.admin.question.QuestionPageRequest">
+    SELECT
+    <include refid="Base_Column_List"/>
+    FROM question
+    <where>
+      and deleted=0
+      <if test="id != null ">
+        and id= #{id}
+      </if>
+      <if test="level != null ">
+        and grade_level= #{level}
+      </if>
+      <if test="subjectId != null ">
+        and subject_id= #{subjectId}
+      </if>
+      <if test="questionType != null ">
+        and question_type= #{questionType}
+      </if>
+    </where>
+  </select>
+
   <select id="selectByIds" resultMap="BaseResultMap" >
     SELECT
     <include refid="Base_Column_List"/>
-    FROM t_question where id in
+    FROM question where id in
     <foreach item="id" collection="ids" open="(" separator=","
              close=")">
       #{id}
@@ -51,7 +72,7 @@
     delete from question
     where id = #{id,jdbcType=INTEGER}
   </delete>
-  <insert id="insert" parameterType="com.han.gp.domain.Question">
+  <insert id="insert" parameterType="com.han.gp.domain.Question" useGeneratedKeys="true" keyProperty="id">
     insert into question (id, question_type, subject_id, 
       score, grade_level, difficult, 
       info_text_content_id, create_user, status, 
@@ -63,7 +84,7 @@
       #{createTime,jdbcType=TIMESTAMP}, #{deleted,jdbcType=BIT}, #{correct,jdbcType=LONGVARCHAR}
       )
   </insert>
-  <insert id="insertSelective" parameterType="com.han.gp.domain.Question">
+  <insert id="insertSelective" parameterType="com.han.gp.domain.Question" useGeneratedKeys="true" keyProperty="id">
     insert into question
     <trim prefix="(" suffix=")" suffixOverrides=",">
       <if test="id != null">
@@ -142,7 +163,7 @@
       </if>
     </trim>
   </insert>
-  <update id="updateByPrimaryKeySelective" parameterType="com.han.gp.domain.Question">
+  <update id="updateByPrimaryKeySelective" parameterType="com.han.gp.domain.Question" useGeneratedKeys="true" keyProperty="id">
     update question
     <set>
       <if test="questionType != null">
@@ -181,7 +202,7 @@
     </set>
     where id = #{id,jdbcType=INTEGER}
   </update>
-  <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.han.gp.domain.Question">
+  <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.han.gp.domain.Question" useGeneratedKeys="true" keyProperty="id">
     update question
     set question_type = #{questionType,jdbcType=INTEGER},
       subject_id = #{subjectId,jdbcType=INTEGER},
@@ -196,7 +217,7 @@
       correct = #{correct,jdbcType=LONGVARCHAR}
     where id = #{id,jdbcType=INTEGER}
   </update>
-  <update id="updateByPrimaryKey" parameterType="com.han.gp.domain.Question">
+  <update id="updateByPrimaryKey" parameterType="com.han.gp.domain.Question" useGeneratedKeys="true" keyProperty="id">
     update question
     set question_type = #{questionType,jdbcType=INTEGER},
       subject_id = #{subjectId,jdbcType=INTEGER},
