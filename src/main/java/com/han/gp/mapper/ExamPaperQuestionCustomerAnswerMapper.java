@@ -27,4 +27,8 @@ public interface ExamPaperQuestionCustomerAnswerMapper {
     List<KeyValue> selectCountByDate(Date startTime, Date endTime);
 
     List<ExamPaperQuestionCustomerAnswer> studentPage(QuestionPageStudentRequest model);
+
+    int insertList(List<ExamPaperQuestionCustomerAnswer> examPaperQuestionCustomerAnswers);
+
+    List<ExamPaperQuestionCustomerAnswer> selectListByPaperAnswerId(Integer id);
 }

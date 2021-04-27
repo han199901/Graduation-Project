@@ -28,4 +28,6 @@ public interface ExamPaperAnswerService {
     ExamPaperAnswer selectById(Integer id);
 
     ExamPaperSubmit examPaperAnswerToVO(Integer id);
+
+    void recordExam(ExamPaperAnswerInfo examPaperAnswerInfo);
 }

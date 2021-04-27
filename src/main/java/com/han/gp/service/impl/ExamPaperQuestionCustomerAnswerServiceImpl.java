@@ -83,7 +83,7 @@ public class ExamPaperQuestionCustomerAnswerServiceImpl implements ExamPaperQues
 
     @Override
     public List<ExamPaperQuestionCustomerAnswer> selectListByPaperAnswerId(Integer id) {
-        return null;
+        return examPaperQuestionCustomerAnswerMapper.selectListByPaperAnswerId(id);
     }
 
     @Override
@@ -109,5 +109,10 @@ public class ExamPaperQuestionCustomerAnswerServiceImpl implements ExamPaperQues
         return PageHelper.startPage(model.getPageIndex(), model.getPageSize(), "id desc").doSelectPageInfo(() ->
                 examPaperQuestionCustomerAnswerMapper.studentPage(model)
         );
+    }
+
+    @Override
+    public void insertList(List<ExamPaperQuestionCustomerAnswer> examPaperQuestionCustomerAnswers) {
+        examPaperQuestionCustomerAnswerMapper.insertList(examPaperQuestionCustomerAnswers);
     }
 }

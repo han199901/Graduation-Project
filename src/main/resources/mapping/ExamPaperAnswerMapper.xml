@@ -53,6 +53,19 @@
     </where>
   </select>
 
+
+  <select id="studentPage" resultMap="BaseResultMap" parameterType="com.han.gp.vo.student.exampaper.ExamPaperAnswerPage">
+    SELECT
+    <include refid="Base_Column_List"/>
+    FROM exam_paper_answer
+    <where>
+      and create_user = #{createUser}
+      <if test="subjectId != null">
+        and subject_id = #{subjectId}
+      </if>
+    </where>
+  </select>
+
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
     delete from exam_paper_answer
     where id = #{id,jdbcType=INTEGER}

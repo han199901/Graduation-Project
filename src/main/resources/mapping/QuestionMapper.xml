@@ -19,16 +19,11 @@
   </resultMap>
   <sql id="Base_Column_List">
     id, question_type, subject_id, score, grade_level, difficult, info_text_content_id, 
-    create_user, status, create_time, deleted
+    create_user, status, create_time, deleted, correct
   </sql>
-  <sql id="Blob_Column_List">
-    correct
-  </sql>
-  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="ResultMapWithBLOBs">
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
     select 
     <include refid="Base_Column_List" />
-    ,
-    <include refid="Blob_Column_List" />
     from question
     where id = #{id,jdbcType=INTEGER}
   </select>

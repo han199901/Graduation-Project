@@ -22,4 +22,6 @@ public interface ExamPaperQuestionCustomerAnswerService {
     ExamPaperQuestionCustomerAnswer selectById(Integer id);
 
     PageInfo<ExamPaperQuestionCustomerAnswer> studentPage(QuestionPageStudentRequest model);
+
+    void insertList(List<ExamPaperQuestionCustomerAnswer> examPaperQuestionCustomerAnswers);
 }

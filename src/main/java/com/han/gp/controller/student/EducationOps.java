@@ -1,10 +1,8 @@
-/*
 package com.han.gp.controller.student;
 
 import com.han.gp.base.BaseApiController;
 import com.han.gp.base.RestResponse;
 import com.han.gp.domain.Class;
-import com.han.gp.domain.Relation;
 import com.han.gp.domain.User;
 import com.han.gp.service.ClassService;
 import com.han.gp.service.RelationService;
@@ -16,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -37,9 +36,11 @@ public class EducationOps extends BaseApiController {
     public RestResponse<List<ClassVO>> list() {
         User user = getCurrentUser();
         int cid = relationService.getClassIdByUid(user.getId());
-        List<Class> subjects = classService.getClassById(cid);
+        List<Class> subjects = new ArrayList<>();
+        Class t = classService.selectById(cid);
+        subjects.add(t);
         List<ClassVO> subjectVMS = subjects.stream().map(d -> {
-            ClassVO subjectVM = modelMapper.map(d, SubjectVM.class);
+            ClassVO subjectVM = modelMapper.map(d, ClassVO.class);
             subjectVM.setId(String.valueOf(d.getId()));
             return subjectVM;
         }).collect(Collectors.toList());
@@ -48,10 +49,9 @@ public class EducationOps extends BaseApiController {
 
     @RequestMapping(value = "/subject/select/{id}", method = RequestMethod.POST)
     public RestResponse<ClassEditRequest> select(@PathVariable Integer id) {
-        Class aClass = ClassService.selectById(id);
-        SubjectEditRequestVM vm = modelMapper.map(aClass, ClassEditRequest.class);
+        Class aClass = classService.selectById(id);
+        ClassEditRequest vm = modelMapper.map(aClass, ClassEditRequest.class);
         return RestResponse.ok(vm);
     }
 
 }
-*/

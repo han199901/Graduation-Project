@@ -12,6 +12,7 @@ import com.han.gp.mapper.QuestionMapper;
 import com.han.gp.mapper.TaskExamCustomerAnswerMapper;
 import com.han.gp.service.ExamPaperAnswerService;
 import com.han.gp.service.ExamPaperQuestionCustomerAnswerService;
+import com.han.gp.service.TaskExamCustomerAnswerService;
 import com.han.gp.service.TextContentService;
 import com.han.gp.utility.ExamUtil;
 import com.han.gp.utility.JsonUtil;
@@ -38,15 +39,17 @@ public class ExamPaperAnswerServiceImpl implements ExamPaperAnswerService {
     private final QuestionMapper questionMapper;
     private final ExamPaperQuestionCustomerAnswerService examPaperQuestionCustomerAnswerService;
     private final TaskExamCustomerAnswerMapper taskExamCustomerAnswerMapper;
+    private final TaskExamCustomerAnswerService examCustomerAnswerService;
 
     @Autowired
-    public ExamPaperAnswerServiceImpl(ExamPaperAnswerMapper examPaperAnswerMapper, ExamPaperMapper examPaperMapper, TextContentService textContentService, QuestionMapper questionMapper, ExamPaperQuestionCustomerAnswerService examPaperQuestionCustomerAnswerService, TaskExamCustomerAnswerMapper taskExamCustomerAnswerMapper) {
+    public ExamPaperAnswerServiceImpl(ExamPaperAnswerMapper examPaperAnswerMapper, ExamPaperMapper examPaperMapper, TextContentService textContentService, QuestionMapper questionMapper, ExamPaperQuestionCustomerAnswerService examPaperQuestionCustomerAnswerService, TaskExamCustomerAnswerMapper taskExamCustomerAnswerMapper, TaskExamCustomerAnswerService examCustomerAnswerService) {
         this.examPaperAnswerMapper = examPaperAnswerMapper;
         this.examPaperMapper = examPaperMapper;
         this.textContentService = textContentService;
         this.questionMapper = questionMapper;
         this.examPaperQuestionCustomerAnswerService = examPaperQuestionCustomerAnswerService;
         this.taskExamCustomerAnswerMapper = taskExamCustomerAnswerMapper;
+        this.examCustomerAnswerService = examCustomerAnswerService;
     }
 
     /**
@@ -258,5 +261,36 @@ public class ExamPaperAnswerServiceImpl implements ExamPaperAnswerService {
                 .collect(Collectors.toList());
         examPaperSubmitVM.setAnswerItems(examPaperSubmitItemVMS);
         return examPaperSubmitVM;
+    }
+
+    @Override
+    @Transactional
+    public void recordExam(ExamPaperAnswerInfo examPaperAnswerInfo) {
+
+        Date now = new Date();
+        ExamPaper examPaper = examPaperAnswerInfo.getExamPaper();
+        ExamPaperAnswer examPaperAnswer = examPaperAnswerInfo.getExamPaperAnswer();
+        List<ExamPaperQuestionCustomerAnswer> examPaperQuestionCustomerAnswers = examPaperAnswerInfo.getExamPaperQuestionCustomerAnswers();
+
+        examPaperAnswerMapper.insertSelective(examPaperAnswer);
+        examPaperQuestionCustomerAnswers.stream().filter(a -> QuestionTypeEnum.needSaveTextContent(a.getQuestionType())).forEach(d -> {
+            TextContent textContent = new TextContent(d.getAnswer(), now);
+            textContentService.insertByFilter(textContent);
+            d.setTextContentId(textContent.getId());
+            d.setAnswer(null);
+        });
+        examPaperQuestionCustomerAnswers.forEach(d -> {
+            d.setExamPaperAnswerId(examPaperAnswer.getId());
+        });
+        examPaperQuestionCustomerAnswerService.insertList(examPaperQuestionCustomerAnswers);
+
+        switch (ExamPaperTypeEnum.fromCode(examPaper.getPaperType())) {
+            case Task: {
+                examCustomerAnswerService.insertOrUpdate(examPaper, examPaperAnswer, now);
+                break;
+            }
+            default:
+                break;
+        }
     }
 }

@@ -76,6 +76,7 @@ public class ExamPaperAnswerOps extends BaseApiController {
         String content = user.getUserName() + " 提交试卷：" + examPaperAnswerInfo.getExamPaper().getName()
                 + " 得分：" + scoreVm
                 + " 耗时：" + ExamUtil.secondToVM(examPaperAnswer.getDoTime());
+        examPaperAnswerService.recordExam(examPaperAnswerInfo);
         return RestResponse.ok(scoreVm);
     }
 
