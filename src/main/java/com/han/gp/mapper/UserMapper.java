@@ -24,4 +24,6 @@ public interface UserMapper {
 
 
     List<User> userPage(UserPageRequest model);
+
+    List<User> userPageByTeacher(com.han.gp.vo.teacher.user.UserPageRequest model);
 }

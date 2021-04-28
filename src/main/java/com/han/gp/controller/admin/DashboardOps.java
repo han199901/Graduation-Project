@@ -49,10 +49,6 @@ public class DashboardOps extends BaseApiController {
         index.setMothDayDoExamQuestionValue(mothDayDoExamQuestionValue);
         index.setMothDayText(DateTimeUtil.MothDay());
 
-        // 用户活动记录报表
-//        List<Integer> mothDayUserActionValue = userEventLogService.selectMothCount();
-//        index.setMothDayUserActionValue();
-
         return RestResponse.ok(index);
     }
 

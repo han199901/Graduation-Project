@@ -5,7 +5,7 @@ import com.github.pagehelper.PageInfo;
 import com.han.gp.domain.User;
 import com.han.gp.mapper.UserMapper;
 import com.han.gp.service.UserService;
-import com.han.gp.vo.admin.user.UserPageRequest;
+import com.han.gp.vo.teacher.user.UserPageRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -27,7 +27,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public PageInfo<User> userPage(UserPageRequest model) {
+    public PageInfo<User> userPage(com.han.gp.vo.admin.user.UserPageRequest model) {
         return PageHelper.startPage(model.getPageIndex(), model.getPageSize(), "id desc").doSelectPageInfo(() ->
                 mapper.userPage(model)
         );
@@ -60,6 +60,13 @@ public class UserServiceImpl implements UserService {
         changePictureUser.setId(currentUser.getId());
         changePictureUser.setImagePath(filePath);
         mapper.updateByPrimaryKeySelective(changePictureUser);
+    }
+
+    @Override
+    public PageInfo<User> userPageByTeacher(UserPageRequest model) {
+        return PageHelper.startPage(model.getPageIndex(), model.getPageSize(), "id desc").doSelectPageInfo(() ->
+                mapper.userPageByTeacher(model)
+        );
     }
 
 }
