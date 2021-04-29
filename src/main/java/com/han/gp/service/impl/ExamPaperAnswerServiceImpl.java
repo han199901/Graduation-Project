@@ -160,6 +160,12 @@ public class ExamPaperAnswerServiceImpl implements ExamPaperAnswerService {
     }
 
     @Override
+    public PageInfo<ExamPaperAnswer> studentPageByTeacher(ExamPaperAnswerPage requestVM) {
+        return PageHelper.startPage(requestVM.getPageIndex(), requestVM.getPageSize(), "id desc").doSelectPageInfo(() ->
+                examPaperAnswerMapper.studentPageByTeacher(requestVM));
+    }
+
+    @Override
     public ExamPaperAnswerInfo calculateExamPaperAnswer(ExamPaperSubmit examPaperSubmitVM, User user) {
         ExamPaperAnswerInfo examPaperAnswerInfo = new ExamPaperAnswerInfo();
         Date now = new Date();

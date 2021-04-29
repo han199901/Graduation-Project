@@ -29,4 +29,6 @@ public interface ExamPaperAnswerMapper {
     List<ExamPaperAnswer> studentPage(ExamPaperAnswerPage requestVM);
 
     ExamPaperAnswer getByPidUid(@Param("pid") Integer paperId, @Param("uid") Integer uid);
+
+    List<ExamPaperAnswer> studentPageByTeacher(ExamPaperAnswerPage requestVM);
 }

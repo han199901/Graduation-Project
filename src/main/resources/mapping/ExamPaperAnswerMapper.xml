@@ -66,6 +66,15 @@
     </where>
   </select>
 
+  <select id="studentPageByTeacher" resultMap="BaseResultMap" parameterType="com.han.gp.vo.student.exampaper.ExamPaperAnswerPage">
+    SELECT
+    <include refid="Base_Column_List"/>
+    FROM exam_paper_answer
+    <where>
+      create_user IN (SELECT sid as create_user FROM relation where tid=#{createUser,jdbcType=INTEGER})
+    </where>
+  </select>
+
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
     delete from exam_paper_answer
     where id = #{id,jdbcType=INTEGER}

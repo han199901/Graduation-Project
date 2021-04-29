@@ -21,6 +21,8 @@ public interface ExamPaperAnswerService {
      */
     PageInfo<ExamPaperAnswer> studentPage(ExamPaperAnswerPage requestVM);
 
+    PageInfo<ExamPaperAnswer> studentPageByTeacher(ExamPaperAnswerPage requestVM);
+
     ExamPaperAnswerInfo calculateExamPaperAnswer(ExamPaperSubmit examPaperSubmitVM, User user);
 
     String judge(ExamPaperSubmit examPaperSubmitVM);
