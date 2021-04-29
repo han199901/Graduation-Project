@@ -94,6 +94,7 @@ const constantRoutes = [{
       activeMenu: '/exam/paper/list'
     },
     hidden: true
+<<<<<<< HEAD
   },
   {
     path: 'question/list',
@@ -105,6 +106,19 @@ const constantRoutes = [{
     }
   },
   {
+=======
+  },
+  {
+    path: 'question/list',
+    component: () => import('@/views/exam/question/list'),
+    name: 'ExamQuestionPageList',
+    meta: {
+      title: '题目列表',
+      noCache: true
+    }
+  },
+  {
+>>>>>>> fa2caab96c3d1911866e3e283c7e768b0df1a25b
     path: 'question/edit/singleChoice',
     component: () => import('@/views/exam/question/edit/single-choice'),
     name: 'singleChoicePage',
@@ -178,6 +192,7 @@ const constantRoutes = [{
       title: '任务列表',
       noCache: true
     }
+<<<<<<< HEAD
   },
   {
     path: 'edit',
@@ -219,6 +234,37 @@ const constantRoutes = [{
         meta: { title: '考试记录' }
       }
     ]
+=======
+  },
+  {
+    path: 'edit',
+    component: () => import('@/views/task/edit'),
+    name: 'TaskEditPage',
+    meta: {
+      title: '任务创建',
+      noCache: true
+    }
+  }
+  ]
+},
+{
+  path: '/answer',
+  component: Layout,
+  name: 'AnswerPage',
+  meta: {
+    title: '成绩管理',
+    icon: 'answer'
+  },
+  alwaysShow: true,
+  children: [{
+    path: 'list',
+    component: () => import('@/views/answer/list'),
+    name: 'AnswerPageList',
+    meta: {
+      title: '答卷列表',
+      noCache: true
+    }
+>>>>>>> fa2caab96c3d1911866e3e283c7e768b0df1a25b
   }]
 },
 {
@@ -244,9 +290,13 @@ const constantRoutes = [{
     title: '404',
     noCache: true
   }
+<<<<<<< HEAD
 },
 { path: '/edit', hidden: true, name: 'ExamPaperEdit', component: () => import('@/views/exam/paper/judge'), meta: { title: '试卷批改' } },
 { path: '/read', hidden: true, name: 'ExamPaperRead', component: () => import('@/views/exam/paper/read'), meta: { title: '试卷查看' } }
+=======
+}
+>>>>>>> fa2caab96c3d1911866e3e283c7e768b0df1a25b
 ]
 
 const router = new Router({
