@@ -10,5 +10,4 @@ export default {
   read: id => post('/api/admin/examPaperAnswer/read/' + id),
   edit: form => post('/api/admin/examPaperAnswer/edit', form)
 
-
 }

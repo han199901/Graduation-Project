@@ -343,8 +343,8 @@ const constantRoutes = [{
     }
   }]
 },
-{ path: '/edit', name: 'ExamPaperEdit', component: () => import('@/views/exam/paper/edit'), meta: { title: '试卷批改' } },
-{ path: '/read', name: 'ExamPaperRead', component: () => import('@/views/exam/paper/read'), meta: { title: '试卷查看' } },
+{ path: '/edit', hidden: true, name: 'ExamPaperEdit', component: () => import('@/views/exam/paper/edit'), meta: { title: '试卷批改' } },
+{ path: '/read', hidden: true, name: 'ExamPaperRead', component: () => import('@/views/exam/paper/read'), meta: { title: '试卷查看' } },
 {
   path: '*',
   hidden: true,
