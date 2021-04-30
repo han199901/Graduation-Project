@@ -7,4 +7,6 @@ public interface FileUpload {
 
     String uploadFile(InputStream inputStream, long size, String extName);
 
+    String uploadByteImage(byte[] uploadBytes);
+
 }

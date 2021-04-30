@@ -17,6 +17,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.io.InputStream;
+import java.io.UnsupportedEncodingException;
 
 @Service
 public class FileUploadImpl implements FileUpload {
@@ -38,6 +39,24 @@ public class FileUploadImpl implements FileUpload {
         String upToken = auth.uploadToken(qnConfig.getBucket());
         try {
             Response response = uploadManager.put(inputStream, null, upToken, null, null);
+            DefaultPutRet putRet = new Gson().fromJson(response.bodyString(), DefaultPutRet.class);
+            return qnConfig.getUrl() + "/" + putRet.key;
+        } catch (QiniuException ex) {
+            logger.error(ex.getMessage(), ex);
+        }
+        return null;
+    }
+
+    @Override
+    public String uploadByteImage(byte[] uploadBytes) {
+        QnConfig qnConfig = systemConfig.getQn();
+        Configuration cfg = new Configuration(Region.region2());
+        UploadManager uploadManager = new UploadManager(cfg);
+        Auth auth = Auth.create(qnConfig.getAccessKey(), qnConfig.getSecretKey());
+        String upToken = auth.uploadToken(qnConfig.getBucket());
+        try {
+            Response response = uploadManager.put(uploadBytes, null, upToken);
+            //解析上传成功的结果
             DefaultPutRet putRet = new Gson().fromJson(response.bodyString(), DefaultPutRet.class);
             return qnConfig.getUrl() + "/" + putRet.key;
         } catch (QiniuException ex) {

@@ -1,38 +1,39 @@
 <template>
   <div>
-    <el-row  class="do-exam-title">
+    <el-row class="do-exam-title">
       <el-col :span="24">
-        <span :key="item.itemOrder"  v-for="item in answer.answerItems">
-             <el-tag :type="questionCompleted(item.completed)" class="do-exam-title-tag" @click="goAnchor('#question-'+item.itemOrder)">{{item.itemOrder}}</el-tag>
+        <span :key="item.itemOrder" v-for="item in answer.answerItems">
+             <el-tag :type="questionCompleted(item.completed)" class="do-exam-title-tag"
+                     @click="goAnchor('#question-'+item.itemOrder)">{{ item.itemOrder }}</el-tag>
         </span>
         <span class="do-exam-time">
           <label>剩余时间：</label>
-          <label>{{formatSeconds(remainTime)}}</label>
+          <label>{{ formatSeconds(remainTime) }}</label>
         </span>
       </el-col>
     </el-row>
-    <el-row  class="do-exam-title-hidden">
+    <el-row class="do-exam-title-hidden">
       <el-col :span="24">
-        <span :key="item.itemOrder"  v-for="item in answer.answerItems">
-             <el-tag  class="do-exam-title-tag" >{{item.itemOrder}}</el-tag>
+        <span :key="item.itemOrder" v-for="item in answer.answerItems">
+             <el-tag class="do-exam-title-tag">{{ item.itemOrder }}</el-tag>
         </span>
         <span class="do-exam-time">
           <label>剩余时间：</label>
         </span>
       </el-col>
     </el-row>
-    <el-container  class="app-item-contain">
+    <el-container class="app-item-contain">
       <el-header class="align-center">
-        <h1>{{form.name}}</h1>
+        <h1>{{ form.name }}</h1>
         <div>
-          <span class="question-title-padding">试卷总分：{{form.score}}</span>
-          <span class="question-title-padding">考试时间：{{form.suggestTime}}分钟</span>
+          <span class="question-title-padding">试卷总分：{{ form.score }}</span>
+          <span class="question-title-padding">考试时间：{{ form.suggestTime }}分钟</span>
         </div>
       </el-header>
       <el-main>
         <el-form :model="form" ref="form" v-loading="formLoading" label-width="100px">
-          <el-row :key="index"  v-for="(titleItem,index) in form.titleItems">
-            <h3>{{titleItem.name}}</h3>
+          <el-row :key="index" v-for="(titleItem,index) in form.titleItems">
+            <h3>{{ titleItem.name }}</h3>
             <el-card class="exampaper-item-box" v-if="titleItem.questionItems.length!==0">
               <el-form-item :key="questionItem.itemOrder" :label="questionItem.itemOrder+'.'"
                             v-for="questionItem in titleItem.questionItems"
@@ -42,13 +43,19 @@
               </el-form-item>
             </el-card>
           </el-row>
-           <el-row class="do-align-center">
-             <el-button type="primary" @click="submitForm">提交</el-button>
-             <el-button>取消</el-button>
-           </el-row>
+          <el-row class="do-align-center">
+            <el-button type="primary" @click="submitForm">提交</el-button>
+            <el-button>取消</el-button>
+          </el-row>
         </el-form>
       </el-main>
     </el-container>
+
+    <video id="video" width="500" height="300" autoplay></video>
+    <button id="open" v-on:click="openVideo()">打开摄像头</button>
+    <button id="snap" v-on:click="getImage">拍照</button>
+    <button id="close" v-on:click="closeVideo()">关闭摄像头</button>
+
   </div>
 </template>
 
@@ -63,6 +70,7 @@ export default {
   components: { QuestionEdit },
   data () {
     return {
+      dialogVisible: false,
       form: {},
       formLoading: false,
       answer: {
@@ -84,6 +92,7 @@ export default {
         _this.remainTime = re.response.suggestTime * 60
         _this.initAnswer()
         _this.timeReduce()
+        _this.openVideo()
         _this.formLoading = false
       })
     }
@@ -94,6 +103,7 @@ export default {
   beforeDestroy () {
     window.clearInterval(this.timer)
   },
+
   methods: {
     formatSeconds (theTime) {
       return formatSeconds(theTime)
@@ -106,6 +116,9 @@ export default {
         } else {
           ++_this.answer.doTime
           --_this.remainTime
+        }
+        if (_this.remainTime % 60 === 0) {
+          _this.getImage()
         }
       }, 1000)
     },
@@ -122,7 +135,13 @@ export default {
         let questionArray = titleItemArray[tIndex].questionItems
         for (let qIndex in questionArray) {
           let question = questionArray[qIndex]
-          this.answer.answerItems.push({ questionId: question.id, content: null, contentArray: [], completed: false, itemOrder: question.itemOrder })
+          this.answer.answerItems.push({
+            questionId: question.id,
+            content: null,
+            contentArray: [],
+            completed: false,
+            itemOrder: question.itemOrder
+          })
         }
       }
     },
@@ -145,7 +164,75 @@ export default {
       }).catch(e => {
         _this.formLoading = false
       })
+    },
+    openVideo () {
+      let videoObj = {
+        'video': true
+      }
+      let video = document.getElementById('video')
+      let errBack = function (error) {
+        alert('请打开摄像头后进入考试，点击确定关闭页面')
+        window.close()
+      }
+      if (navigator.getUserMedia) { // Standard
+        navigator.getUserMedia(videoObj, function (stream) {
+          video.srcObject = stream
+          video.play()
+        }, errBack)
+      } else if (navigator.webkitGetUserMedia) { // WebKit-prefixed
+        navigator.webkitGetUserMedia(videoObj, function (stream) {
+          video.src = window.webkitURL.createObjectURL(stream)
+          video.play()
+        }, errBack)
+      } else if (navigator.mozGetUserMedia) { // Firefox-prefixed
+        navigator.mozGetUserMedia(videoObj, function (stream) {
+          video.src = window.URL.createObjectURL(stream)
+          video.play()
+        }, errBack)
+      }
+    },
+    closeVideo () {
+      let video = document.getElementById('video')
+      if (!video) return
+      let stream = video.srcObject
+      console.log(stream)
+      let tracks = stream.getTracks()
+      tracks.forEach(track => {
+        track.stop()
+      })
+      video.srcObject = null
+    },
+    getImage () {
+      let _this = this
+      let canvas = document.createElement('canvas')
+      canvas.width = 1280
+      canvas.height = 720
+      let context = canvas.getContext('2d')
+      let video = document.getElementById('video')
+      context.drawImage(video, 0, 0, 1280, 720)
+      console.log('转文件')
+      let base64Data = canvas.toDataURL('images/png')
+
+      let byteString
+      if (base64Data.split(',')[0].indexOf('base64') >= 0) { byteString = atob(base64Data.split(',')[1]) } else { byteString = unescape(base64Data.split(',')[1]) }
+      let mimeString = base64Data.split(',')[0].split(':')[1].split(';')[0]
+      let ia = new Uint8Array(byteString.length)
+      for (let i = 0; i < byteString.length; i++) {
+        ia[i] = byteString.charCodeAt(i)
+      }
+      let blob = new Blob([ia], { type: mimeString })
+
+      let fd = new FormData()
+      fd.append('file', blob)
+      examPaperAnswerApi.update(fd).then(re => {
+        if (re.code === 1) {
+          console.log(re.response)
+        } else {
+          _this.$message.error(re.message)
+        }
+      })
     }
+
   },
   computed: {
     ...mapGetters('enumItem', ['enumFormat']),
@@ -157,20 +244,29 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-  .align-center {
-    text-align: center
-  }
 
-  .exam-question-item {
-    padding: 10px;
+#video {
+  position: fixed;
+  width: 125px;
+  height: auto;
+  top: 50px;
+  right: 10px;
+}
 
-    .el-form-item__label {
-      font-size: 15px !important;
-    }
-  }
+.align-center {
+  text-align: center
+}
 
-  .question-title-padding {
-    padding-left: 25px;
-    padding-right: 25px;
+.exam-question-item {
+  padding: 10px;
+
+  .el-form-item__label {
+    font-size: 15px !important;
   }
+}
+
+.question-title-padding {
+  padding-left: 25px;
+  padding-right: 25px;
+}
 </style>

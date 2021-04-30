@@ -1,7 +1,5 @@
 package com.han.gp.controller.student;
 
-
-
 import com.han.gp.base.BaseApiController;
 import com.han.gp.base.RestResponse;
 import com.han.gp.service.FileUpload;
@@ -48,5 +46,18 @@ public class UploadController extends BaseApiController {
         }
     }
 
-
+    @RequestMapping("/camera")
+    @ResponseBody
+    public RestResponse camera(HttpServletRequest request) {
+        MultipartHttpServletRequest multipartHttpServletRequest = (MultipartHttpServletRequest) request;
+        MultipartFile multipartFile = multipartHttpServletRequest.getFile("file");
+        long attachSize = multipartFile.getSize();
+        String imgName = multipartFile.getOriginalFilename();
+        try (InputStream inputStream = multipartFile.getInputStream()) {
+            String filePath = fileUpload.uploadFile(inputStream, attachSize, imgName);
+            return RestResponse.ok(filePath);
+        } catch (IOException e) {
+            return RestResponse.fail(2, e.getMessage());
+        }
+    }
 }
