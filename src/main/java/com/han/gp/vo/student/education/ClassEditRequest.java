@@ -13,10 +13,8 @@ public class ClassEditRequest extends BasePage {
     @NotBlank
     private String name;
 
-    @NotNull
     private Integer level;
 
-    @NotBlank
     private String levelName;
 
     public Integer getId() {

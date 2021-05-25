@@ -52,9 +52,6 @@
     </el-container>
 
     <video id="video" width="500" height="300" autoplay></video>
-    <button id="open" v-on:click="openVideo()">打开摄像头</button>
-    <button id="snap" v-on:click="getImage">拍照</button>
-    <button id="close" v-on:click="closeVideo()">关闭摄像头</button>
 
   </div>
 </template>
@@ -170,6 +167,7 @@ export default {
         'video': true
       }
       let video = document.getElementById('video')
+      // eslint-disable-next-line handle-callback-err
       let errBack = function (error) {
         alert('请打开摄像头后进入考试，点击确定关闭页面')
         window.close()
@@ -214,7 +212,11 @@ export default {
       let base64Data = canvas.toDataURL('images/png')
 
       let byteString
-      if (base64Data.split(',')[0].indexOf('base64') >= 0) { byteString = atob(base64Data.split(',')[1]) } else { byteString = unescape(base64Data.split(',')[1]) }
+      if (base64Data.split(',')[0].indexOf('base64') >= 0) {
+        byteString = atob(base64Data.split(',')[1])
+      } else {
+        byteString = unescape(base64Data.split(',')[1])
+      }
       let mimeString = base64Data.split(',')[0].split(':')[1].split(';')[0]
       let ia = new Uint8Array(byteString.length)
       for (let i = 0; i < byteString.length; i++) {

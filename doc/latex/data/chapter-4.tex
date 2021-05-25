@@ -75,7 +75,7 @@
 		\caption{用户表}
 		\label{table:user}
 	\end{table}
-	\item[(2)] User表，用户表用于存储用户的基本信息。如图表\ref{table:class}所示。
+	\item[(2)] 班级表，班级表用于存储班级的基本信息。如图表\ref{table:class}所示。
 	\begin{table}[!htbp]
 		\centering
 		\begin{tabular}{|c|c|c|c|}
@@ -89,11 +89,141 @@
 			deleted & tinyint(1) & YES & 是否删除 \\
 			\hline
 		\end{tabular}
-		\caption{用户表}
+		\caption{班级表}
 		\label{table:class}
 	\end{table}
-	\item[(3)] 试题表。ID、试题类型、班级、分数、难度、正确答案、描述等。
-	\item[(4)] 班级表。班级ID、班级名称。
-	\item[(5)] 考试表。考试名、考试班级、考试描述、考试创建人、考试创建时间。
-	\item[(6)] 答题表。试卷ID、试卷名字、试卷类型、答题人、得分、满分、详细描述。 
+	\item[(3)] 试题表，试题表主要用于存储实体的基本信息，主要有ID、试题类型、班级、分数、难度、正确答案、描述等。如图表\ref{table:question}所示。
+	\begin{table}[!htbp]
+		\centering
+		\begin{tabular}{|c|c|c|c|}
+			\hline
+			字段名 & 类型(长度) & 是否可以为空 & 说明 \\
+			\hline
+			ID & int(11) & PRIMARY KEY & 唯一标识 \\
+			\hline
+			score & int(11) & YES & 分数 \\
+			\hline
+			grade\_level & int(11) & YES & 班级 \\
+			\hline
+			difficult & int(11) & YES & 难度 \\
+			\hline
+			correct & text & YES & 正确答案 \\
+			\hline
+			info\_text\_content\_id & int(11) & YES & 上下文唯一标识符 \\
+			\hline
+			create\_user & int(11) & YES & 创建人 \\
+			\hline
+			status & int(11) & YES & 状态 \\
+			\hline
+			create\_time & datetime & YES & 创建时间 \\
+			\hline
+			deleted & tinyint(1) & YES & 是否删除 \\
+			\hline
+		\end{tabular}
+		\caption{题目表}
+		\label{table:question}
+	\end{table}
+	\item[(4)] 试卷表，试卷表主要用于存储试卷实体的基本信息。试卷ID、试卷名称和内容。如图表\ref{table:paper}所示。
+	\begin{table}[!htbp]
+		\centering
+		\begin{tabular}{|c|c|c|c|}
+			\hline
+			字段名 & 类型(长度) & 是否可以为空 & 说明 \\
+			\hline
+			ID & int(11) & PRIMARY KEY & 唯一标识 \\
+			\hline
+			name & varchar(255) & YES & 名字 \\
+			\hline
+			paper\_type & int(11) & YES & 试卷类型 \\
+			\hline
+			grade\_level & int(11) & YES & 班级 \\
+			\hline
+			score & int(11) & YES & 分数 \\
+			\hline
+			question\_count & int(11) & YES & 问题数 \\
+			\hline
+			suggest\_time & int(11) & YES & 建议时间 \\
+			\hline
+			limit\_start\_time & datetime & YES & 开始时间 \\
+			\hline
+			limit\_end\_time & datetime & YES & 结束时间 \\
+			\hline
+			frame\_text\_content\_id & int(11) & YES & 内容ID \\
+			\hline
+			create\_user & int(11) & YES & 创建人 \\
+			\hline
+			create\_time & datetime & YES & 创建时间 \\
+			\hline
+			deleted & bit(1) & YES & 是否删除 \\
+			\hline
+			task\_exam\_id & int(11) & YES & 考试ID \\
+			\hline
+		\end{tabular}
+		\caption{试卷表}
+		\label{table:paper}
+	\end{table}
+	\item[(5)] 考试表,考试表用于存储考试的基本信心。主要包括考试名、考试班级、考试描述、考试创建人、考试创建时间。如图表\ref{table:exam}所示。
+	\begin{table}[!htbp]
+		\centering
+		\begin{tabular}{|c|c|c|c|}
+			\hline
+			字段名 & 类型(长度) & 是否可以为空 & 说明 \\
+			\hline
+			ID & int(11) & PRIMARY KEY & 唯一标识 \\
+			\hline
+			title & varchar(255) & YES & 标题 \\
+			\hline
+			grade\_level & int(11) & YES & 班级 \\
+			\hline
+			frame\_text\_content\_id & int(11) & YES & 内容ID \\
+			\hline
+			create\_user & int(11) & YES & 创建人 \\
+			\hline
+			create\_time & datetime & YES & 创建时间 \\
+			\hline
+			deleted & bit(1) & YES & 是否删除 \\
+			\hline
+			create\_user\_name & varchar(255) & YES & 创建人姓名 \\
+			\hline
+		\end{tabular}
+		\caption{考试表}
+		\label{table:exam}
+	\end{table}
+	\item[(6)] 答题表，答题表用于存储答题的基本信息。主要包括试卷ID、试卷名字、试卷类型、答题人、得分、满分、详细描述。 如图表\ref{table:dati}所示。
+	\begin{table}[!htbp]
+		\centering
+		\begin{tabular}{|c|c|c|c|}
+			\hline
+			字段名 & 类型(长度) & 是否可以为空 & 说明 \\
+			\hline
+			ID & int(11) & PRIMARY KEY & 唯一标识 \\
+			\hline
+			question\_id & int(11) & YES & 问题的唯一标识 \\
+			\hline
+			exam\_paper\_id & int(11) & YES & 试卷的唯一标识 \\
+			\hline
+			exam\_paper\_answer\_id & int(11) & YES & 试卷答案的唯一标识 \\
+			\hline
+			question\_type & int(11) & YES & 问题类型 \\
+			\hline
+			customer\_score & int(11) & YES & 用户分数 \\
+			\hline
+			question\_score & int(11) & YES & 问题分数 \\
+			\hline
+			question\_text\_content\_id & int(11) & YES & 问题内容ID \\
+			\hline
+			answer & varchar(255) & YES	 & 答案 \\
+			\hline
+			text\_content\_id & int(11) & YES & 描述ID \\
+			\hline
+			do\_right & bit(1) & YES & 是否正确 \\
+			\hline
+			create\_user & int(11) & YES & 创建人 \\
+			\hline
+			create\_time & datetime & YES & 创建时间 \\
+			\hline
+		\end{tabular}
+		\caption{考试表}
+		\label{table:dati}
+	\end{table}
 \end{enumerate}

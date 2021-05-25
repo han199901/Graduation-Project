@@ -25,17 +25,6 @@
       <el-col :span="17">
         <el-card shadow="hover">
           <el-tabs active-name="event" type="card">
-            <el-tab-pane label="用户动态" name="event">
-              <div class="block">
-                <el-timeline>
-                  <el-timeline-item  :timestamp="item.createTime" placement="top" :key="item.id" v-for="item in event">
-                    <el-card>
-                      <p>{{item.content}}</p>
-                    </el-card>
-                  </el-timeline-item>
-                </el-timeline>
-              </div>
-            </el-tab-pane>
             <el-tab-pane label="个人资料修改" name="update">
               <el-form :model="form" ref="form" label-width="100px" v-loading="formLoading" :rules="rules">
                 <el-form-item label="真实姓名：" prop="realName" required>
@@ -55,12 +44,6 @@
                 </el-form-item>
                 <el-form-item label="手机：">
                   <el-input v-model="form.phone"></el-input>
-                </el-form-item>
-                <el-form-item label="年级：" prop="userLevel" required>
-                  <el-select v-model="form.userLevel" placeholder="年级">
-                    <el-option v-for="item in levelEnum" :key="item.key" :value="item.key"
-                               :label="item.value"></el-option>
-                  </el-select>
                 </el-form-item>
                 <el-form-item>
                   <el-button type="primary" @click="submitForm">更新</el-button>
@@ -106,9 +89,6 @@ export default {
   },
   created () {
     let _this = this
-    userApi.getUserEvent().then(re => {
-      _this.event = re.response
-    })
     userApi.getCurrentUser().then(re => {
       _this.form = re.response
     })
